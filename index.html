@@ -130,12 +130,16 @@
             }
 
             function getPensionPS(pension) {
+                const tranches = [4907/12, 13324/12, 19287/12, 29817/12, 59817/12, 79817/12]
+                const tranchesCSG = [0.038, 0.055, 0.075, 0.092, 0.112, 0.132]
+                console.log(tranches);
                 retainedCSG = 0
                 if (pension > 1110) retainedCSG += 0.038 * (pension - 1110)
                 if (pension > 1607) retainedCSG += 0.055 * (pension - 1607)
                 if (pension > 2485) retainedCSG += 0.075 * (pension - 2485)
                 if (pension > 4985) retainedCSG += 0.092 * (pension - 4985)
                 if (pension > 6651) retainedCSG += 0.112 * (pension - 6651)
+                if (pension > 6651) retainedCSG += 0.132 * (pension - 6651)
                 return pension - retainedCSG;
             }
 
