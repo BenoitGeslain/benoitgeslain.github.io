@@ -1,175 +1,152 @@
-<div class="container">
-    <h5 style="font-weight: 600; text-align: center; justify-content: center">Simulateur de pension de retraite</h5>
-    <form style="text-align: center; justify-content: center" id="pensionForm" onsubmit="return mySubmitFunction(event)">
-        <label for="pension">Votre pension mensuelle nette (après CSG) :
-        </label>
-        <div class="input-button-container">
-            <div class="input-container">
-                <div class="icon-container">
-                    <span class="currency">€</span>
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="plotly-2.32.0.min.js" charset="utf-8"></script>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <h5 style="font-weight: 600; text-align: center; justify-content: center">Simulateur de pension de retraite</h5>
+            <form style="text-align: center; justify-content: center" id="pensionForm" onsubmit="return mySubmitFunction(event)">
+                <label for="pension">Votre pension mensuelle nette (après CSG) :
+                </label>
+                <div class="input-button-container">
+                    <div class="input-container">
+                        <div class="icon-container">
+                            <span class="currency">€</span>
+                        </div>
+                        <input class="input" type="number" id="pension" name="pension" value="1200" required="" data-ddg-inputtype="unknown">
+                    </div>
                 </div>
-                <input class="input" type="number" id="pension" name="pension" value="1200" required="" data-ddg-inputtype="unknown">
+            </form>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; flex-direction: column; width: 100%; justify-content: center; gap: 1em; padding-top: 1em;">
+            <div class="container" style="margin-top: 0; display: flex; justify-content: space-between; flex-direction: column;">
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350;">Avec une majorité de députés</div>
+                    <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">Nouveau Front Populaire (Proposition PS)</div>
+                </h5>
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350;">vous recevrez :</div>
+                </h5>
+
+                <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
+                    <span id="pensionNet2">1134</span> €
+                </h2>
+
+                <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
+                    <span id="difference" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
+                        €</span><br>
+                    de différence par mois
+                </div>
+
+
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350;">D'après la désinformation gouvernementale</div>
+                </h5>
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350;">vous recevrez :</div>
+                </h5>
+
+                <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
+                    <span id="pensionNetAttal">1134</span> €
+                </h2>
+
+                <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
+                    <span id="differenceAttal" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
+                        €</span><br>
+                    de différence par mois
+                </div>
+                <p></p>
             </div>
-        </div>
-    </form>
-</div>
+            <div class="container" style="display: flex; justify-items: center; justify-content: center;">
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                    <a class="a2a_button_facebook"></a>
+                    <a class="a2a_button_twitter"></a>
+                    <a class="a2a_button_whatsapp"></a>
+                    <a class="a2a_button_email"></a>
+                    <a class="a2a_button_copy_link"></a>
+                </div>
+            </div>
+            <span id="pensionNet1" style="display: none;">1200</span>
 
-<div style="display: flex; flex-wrap: wrap; flex-direction: column; width: 100%; justify-content: center; gap: 1em; padding-top: 1em;">
-    <div class="container" style="margin-top: 0; display: flex; justify-content: space-between; flex-direction: column;">
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">Avec une majorité de députés</div>
-            <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">Nouveau Front Populaire (Proposition PS)</div>
-        </h5>
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">vous recevrez :</div>
-        </h5>
 
-        <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
-            <span id="pensionNet2">1134</span> €
-        </h2>
-
-        <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
-            <span id="difference" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
-                €</span><br>
-            de différence chaque année
         </div>
 
+        <script>
+            document.getElementById("pension").addEventListener("input", updateResults);
 
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">D'après la désinformation gouvernementale</div>
-        </h5>
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">vous recevrez :</div>
-        </h5>
+            updateResults();
 
-        <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
-            <span id="pensionNetAttal">1134</span> €
-        </h2>
+            function updateResults() {
+                const pension = parseFloat(document.getElementById("pension").value);
 
-        <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
-            <span id="differenceAttal" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
-                €</span><br>
-            de différence chaque année
-        </div>
-        <p></p>
-    </div>
-    <div class="container" style="display: flex; justify-items: center; justify-content: center;">
-        <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-            <a class="a2a_button_facebook"></a>
-            <a class="a2a_button_twitter"></a>
-            <a class="a2a_button_whatsapp"></a>
-            <a class="a2a_button_email"></a>
-            <a class="a2a_button_copy_link"></a>
-        </div>
-    </div>
-    <span id="pensionNet1" style="display: none;">1200</span>
-    <!-- <div class="container"
-        style="margin-top: 0; display: flex; justify-content: space-around; flex-direction: column;">
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">Avec une majorité de députés :</div>
-        </h5>
-        <header style="text-align: center; padding: 1em;">
-            <img src="ens.png" alt="logo ensemble">
-        </header>
-        <h5 style="text-align: center;">
-            <div style="font-weight: 350;">vous recevrez :</div>
-        </h5>
-        <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
-            <span id="pensionNet1"></span> €
-        </h2>
+                if (!isNaN(pension)) {
+                    const pension = parseFloat(document.getElementById("pension").value);
 
-        <div class="callout success"
-            style="margin-bottom: 0.5em; background: rgba(255, 255, 255, 0.8); border: 0px solid #217326; color: #217326; text-align: center; font-weight: 600;">
-            Aucune augmentation de CSG
-        </div>
+                    const csg1 = getCSGRate1(pension) * 0.985 * pension;
+                    const csg2 = getCSGRate2(pension) * 0.985 * pension;
 
-        <div class="callout success"
-            style="margin-bottom: 0.5em; background: rgba(255, 255, 255, 0.8); border: 0px solid #217326; color: #217326; text-align: center; font-weight: 600;">
-            5,3% d’augmentation de vos pensions depuis janvier
-        </div>
-        <div class="callout success"
-            style="margin-bottom: 0; background: rgba(255, 255, 255, 0.8); border: 0px solid #217326; color: #217326; text-align: center; font-weight: 600;">
-            Une revalorisation chaque année sur l’inflation
-        </div>
-    </div> -->
+                    const pensionNet1 = pension; //calculatePensionAfterCSG(pension, getCSGRate1(pension));
+                    const pensionNet2 = getPensionPS(pension / (1 - getCSGRate1(pension)));
+                    const pensionNetAttal = ((1 - getCSGRate2(pension)) * pension) / (1 - getCSGRate1(pension));
 
+                    const difference = (pensionNet2 - pensionNet1);
+                    const differenceAttal = (pensionNetAttal - pensionNet1);
+                    const pensionBrutte = pension / (1 - getCSGRate1(pension));
 
-</div>
+                    document.getElementById("pensionNet1").textContent = pensionNet1.toFixed(0);
+                    document.getElementById("pensionNet2").textContent = pensionNet2.toFixed(0);
+                    document.getElementById("difference").textContent = difference.toFixed(0);
+                    document.getElementById("pensionNetAttal").textContent = pensionNetAttal.toFixed(0);
+                    document.getElementById("differenceAttal").textContent = differenceAttal.toFixed(0);
+                } else {
+                    document.getElementById("pensionNet1").textContent = "";
+                    document.getElementById("pensionNet2").textContent = "";
+                    document.getElementById("difference").textContent = "";
+                    document.getElementById("pensionNetAttal").textContent = "";
+                    document.getElementById("differenceAttal").textContent = "";
+                }
+            }
 
-<script>
-    var a2a_config = a2a_config || {};
-    a2a_config.locale = "fr";
-</script>
+            function getCSGRate1(pension) {
+                if (pension <= 1386) return 0;
+                if (pension <= 1607) return 0.038;
+                if (pension <= 2424) return 0.066;
+                return 0.083;
+            }
 
-<script>
-    document.getElementById("pension").addEventListener("input", updateResults);
+            function getCSGRate2(pension) {
+                if (pension <= 409) return 0;
+                if (pension <= 1110) return 0.038;
+                if (pension <= 1607) return 0.055;
+                if (pension <= 2485) return 0.075;
+                if (pension <= 4985) return 0.092;
+                if (pension <= 6651) return 0.112;
+                return 0.132;
+            }
 
-    updateResults();
+            function getPensionPS(pension) {
+                retainedCSG = 0
+                if (pension > 1110) retainedCSG += 0.038 * (pension - 1110)
+                if (pension > 1607) retainedCSG += 0.055 * (pension - 1607)
+                if (pension > 2485) retainedCSG += 0.075 * (pension - 2485)
+                if (pension > 4985) retainedCSG += 0.092 * (pension - 4985)
+                if (pension > 6651) retainedCSG += 0.112 * (pension - 6651)
+                return pension - retainedCSG;
+            }
 
-    function updateResults() {
-        const pension = parseFloat(document.getElementById("pension").value);
+            function calculatePensionAfterCSG(pension, csgRate) {
+                return pension * (1 - csgRate * 0.985);
+            }
 
-        if (!isNaN(pension)) {
-            const pension = parseFloat(document.getElementById("pension").value);
-
-            const csg1 = getCSGRate1(pension) * 0.985 * pension;
-            const csg2 = getCSGRate2(pension) * 0.985 * pension;
-
-            const pensionNet1 = pension; //calculatePensionAfterCSG(pension, getCSGRate1(pension));
-            const pensionNet2 = getPensionPS(pension / (1 - getCSGRate1(pension)));
-            const pensionNetAttal = ((1 - getCSGRate2(pension)) * pension) / (1 - getCSGRate1(pension));
-
-            const difference = (pensionNet2 - pensionNet1) * 12;
-            const differenceAttal = (pensionNetAttal - pensionNet1) * 12;
-            const pensionBrutte = pension / (1 - getCSGRate1(pension));
-
-            document.getElementById("pensionNet1").textContent = pensionNet1.toFixed(0);
-            document.getElementById("pensionNet2").textContent = pensionNet2.toFixed(0);
-            document.getElementById("difference").textContent = difference.toFixed(0);
-            document.getElementById("pensionNetAttal").textContent = pensionNetAttal.toFixed(0);
-            document.getElementById("differenceAttal").textContent = differenceAttal.toFixed(0);
-        } else {
-            document.getElementById("pensionNet1").textContent = "";
-            document.getElementById("pensionNet2").textContent = "";
-            document.getElementById("difference").textContent = "";
-            document.getElementById("pensionNetAttal").textContent = "";
-            document.getElementById("differenceAttal").textContent = "";
-        }
-    }
-
-    function getCSGRate1(pension) {
-        if (pension <= 1386) return 0;
-        if (pension <= 1607) return 0.038;
-        if (pension <= 2424) return 0.066;
-        return 0.083;
-    }
-
-    function getCSGRate2(pension) {
-        if (pension <= 409) return 0;
-        if (pension <= 1110) return 0.038;
-        if (pension <= 1607) return 0.055;
-        if (pension <= 2485) return 0.075;
-        if (pension <= 4985) return 0.092;
-        if (pension <= 6651) return 0.112;
-        return 0.132;
-    }
-
-    function getPensionPS(pension) {
-        retainedCSG = 0
-        if (pension > 1110) retainedCSG += 0.038 * (pension - 1110)
-        if (pension > 1607) retainedCSG += 0.055 * (pension - 1607)
-        if (pension > 2485) retainedCSG += 0.075 * (pension - 2485)
-        if (pension > 4985) retainedCSG += 0.092 * (pension - 4985)
-        if (pension > 6651) retainedCSG += 0.112 * (pension - 6651)
-        return pension - retainedCSG;
-    }
-
-    function calculatePensionAfterCSG(pension, csgRate) {
-        return pension * (1 - csgRate * 0.985);
-    }
-
-    function mySubmitFunction(e) {
-    e.preventDefault();
-    return false;
-    }
-</script>
+            function mySubmitFunction(e) {
+            e.preventDefault();
+            return false;
+            }
+        </script>
+    </body>
+</html>
