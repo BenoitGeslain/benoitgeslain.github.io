@@ -4,7 +4,6 @@ updateResults();
 
 function updateResults() {
     pension = parseFloat(document.getElementById("pension").value);
-    console.log(pension);
 
     if (isNaN(pension)) pension = 1200
 
