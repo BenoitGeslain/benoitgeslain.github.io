@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+html {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Inter;
+  height: 100%;
+  color: white;
+  background: #15202b;
+}
+
+h2 {
+  font-weight: 900;
+  text-align: center;
+  font-size: 1.5rem;
+  margin-top: 0;
+}
+h1  {
+  font-weight: 800;
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 1.5rem 1.5rem 0;
+}
+
+#calculator {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  height: calc(100% - 3.75rem);
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.calculator-entry {
+  background: #1e2c3c;
+  border-radius: 1rem;
+  padding: 4rem 2rem;
+}
+
+.calculator-outputs-container {
+  overflow: auto;
+}
+
+.calculator-outputs {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1.5rem;
+  min-height: 100%;
+}
+
+.calculator-output {
+  background: #1e2c3c;
+  border-radius: 1rem;
+  text-align: center;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.calculator-output-result {
+  color: #fecd47;
+  font-weight: 900;
+  font-size: 1.75rem;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.calculator-output-diff {
+  color: #ff4a52;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.calculator-label {
+  position: absolute;
+  font-size: 0.75rem;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: #15202b;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+.calculator-label-fake  {
+  background: #ff4a52;
+}
+.calculator-label-verify  {
+  background: #4c8d4a;
+}
+
+.calculator-source {
+  position: absolute;
+  font-size: 0.75rem;
+  right: 0.5rem;
+  bottom: 0.5rem;
+  background: #15202b;
+  padding: 0.5rem 0.75rem;
+  border-radius: 1rem;
+}
+
+.calculator-source a {
+  font-weight: 500;
+  color: white;
+  text-decoration: underline;
+}
+
+
+.input-container {
+  background: #15202b;
+  display: inline-flex;
+  font-size: 2rem;
+  border-radius: 0.5rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-right: 1rem;
+  font-weight:700;
+}
+
+.input-container input {
+  font-size: 2rem;
+  background: transparent;
+  border: 0;
+  color: white;
+  width: 120px;
+  text-align: right;
+  padding: 0.5rem;
+  font-family: inherit;
+  font-weight:700;
+}
+
+.calculator-entry {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+}
+
+.calculator-output-fake {
+  opacity: 0.35;
+  cursor: dissallow;
+}
+
+
+@media (max-width: 728px) {
+  #calculator {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+}
