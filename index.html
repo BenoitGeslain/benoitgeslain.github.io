@@ -2,7 +2,7 @@
 <html>
     <head>
 
-        <script src="plotly-2.32.0.min.js" charset="utf-8"></script>
+        <!-- <script src="plotly-2.32.0.min.js" charset="utf-8"></script> -->
 
     </head>
 
@@ -27,7 +27,7 @@
             <div class="container" style="margin-top: 0; display: flex; justify-content: space-between; flex-direction: column;">
                 <h5 style="text-align: center;">
                     <div style="font-weight: 350;">Avec une majorité de députés</div>
-                    <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">Nouveau Front Populaire (Proposition PS)</div>
+                    <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">Proposition PS : <a href="https://www.assemblee-nationale.fr/dyn/16/amendements/0760/AN/15736">Lien vers ammendement (assemblee-nationale.fr)</a></div>
                 </h5>
                 <h5 style="text-align: center;">
                     <div style="font-weight: 350;">vous recevrez :</div>
@@ -38,14 +38,35 @@
                 </h2>
 
                 <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
-                    <span id="difference" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
+                    <span id="difference2" style="font-size: 30px; font-weight: bold;">0</span><span style="font-size: 30px; font-weight: bold;">
+                        €</span><br>
+                    de différence par mois
+                </div>
+
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">Contre proposition de la base militante Nouveau Front Populaire : </div>
+                    <div style="font-weight: 350;">Suppression de 2 tranches d'imposition :;
+                    </div><div style="font-weight: 350;">0 % pour les revenus bruts annuels inférieurs à 19 287€ annuel brut (1 607.25€ mensuel Net) €
+                    </div><div style="font-weight: 350;">comme c'est le cas aujourd'hui déjà ;
+
+                </h5>
+                <h5 style="text-align: center;">
+                    <div style="font-weight: 350;">vous recevrez :</div>
+                </h5>
+
+                <h2 style="text-align: center; font-weight: 600; font-size: 2.5em;">
+                    <span id="pensionNet3">1134</span> €
+                </h2>
+
+                <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
+                    <span id="difference3" style="font-size: 30px; font-weight: bold;">0</span><span style="font-size: 30px; font-weight: bold;">
                         €</span><br>
                     de différence par mois
                 </div>
 
 
                 <h5 style="text-align: center;">
-                    <div style="font-weight: 350;">D'après la désinformation gouvernementale</div>
+                    <div style="font-weight: 350; color: #EE2C17; font-weight: bold;">D'après la désinformation gouvernementale :</div>
                 </h5>
                 <h5 style="text-align: center;">
                     <div style="font-weight: 350;">vous recevrez :</div>
@@ -56,7 +77,7 @@
                 </h2>
 
                 <div class="callout alert" style="margin-bottom: 0;background: rgba(255, 255, 255, 0.8); color: #EE2C17; text-align: center; font-weight: 600; border: none;">
-                    <span id="differenceAttal" style="font-size: 30px; font-weight: bold;">-792</span><span style="font-size: 30px; font-weight: bold;">
+                    <span id="differenceAttal" style="font-size: 30px; font-weight: bold;">0</span><span style="font-size: 30px; font-weight: bold;">
                         €</span><br>
                     de différence par mois
                 </div>
@@ -92,21 +113,26 @@
 
                     const pensionNet1 = pension; //calculatePensionAfterCSG(pension, getCSGRate1(pension));
                     const pensionNet2 = getPensionPS(pension / (1 - getCSGRate1(pension)));
+                    const pensionNet3 = getPensionProposition(pension / (1 - getCSGRate1(pension)));
                     const pensionNetAttal = ((1 - getCSGRate2(pension)) * pension) / (1 - getCSGRate1(pension));
 
-                    const difference = (pensionNet2 - pensionNet1);
+                    const difference2 = (pensionNet2 - pensionNet1);
+                    const difference3 = (pensionNet3 - pensionNet1);
                     const differenceAttal = (pensionNetAttal - pensionNet1);
                     const pensionBrutte = pension / (1 - getCSGRate1(pension));
 
                     document.getElementById("pensionNet1").textContent = pensionNet1.toFixed(0);
                     document.getElementById("pensionNet2").textContent = pensionNet2.toFixed(0);
-                    document.getElementById("difference").textContent = difference.toFixed(0);
+                    document.getElementById("pensionNet3").textContent = pensionNet3.toFixed(0);
+                    document.getElementById("difference2").textContent = difference2.toFixed(0);
+                    document.getElementById("difference3").textContent = difference3.toFixed(0);
                     document.getElementById("pensionNetAttal").textContent = pensionNetAttal.toFixed(0);
                     document.getElementById("differenceAttal").textContent = differenceAttal.toFixed(0);
                 } else {
                     document.getElementById("pensionNet1").textContent = "";
                     document.getElementById("pensionNet2").textContent = "";
-                    document.getElementById("difference").textContent = "";
+                    document.getElementById("difference2").textContent = "";
+                    document.getElementById("difference3").textContent = "";
                     document.getElementById("pensionNetAttal").textContent = "";
                     document.getElementById("differenceAttal").textContent = "";
                 }
@@ -130,16 +156,24 @@
             }
 
             function getPensionPS(pension) {
-                const tranches = [4907/12, 13324/12, 19287/12, 29817/12, 59817/12, 79817/12]
-                const tranchesCSG = [0.038, 0.055, 0.075, 0.092, 0.112, 0.132]
-                console.log(tranches);
-                retainedCSG = 0
-                if (pension > 1110) retainedCSG += 0.038 * (pension - 1110)
-                if (pension > 1607) retainedCSG += 0.055 * (pension - 1607)
-                if (pension > 2485) retainedCSG += 0.075 * (pension - 2485)
-                if (pension > 4985) retainedCSG += 0.092 * (pension - 4985)
-                if (pension > 6651) retainedCSG += 0.112 * (pension - 6651)
-                if (pension > 6651) retainedCSG += 0.132 * (pension - 6651)
+                const tranches = [4907/12, 13324/12, 19287/12, 29817/12, 59817/12, 79817/12];
+                const CSGParTranches = [0.038, 0.055, 0.075, 0.092, 0.112, 0.132];
+                retainedCSG = 0;
+                for (let i = 1; i < tranches.length; i++) {
+                    if (pension > tranches[i - 1]) retainedCSG += CSGParTranches[i - 1] * (Math.min(pension, tranches[i]) - tranches[i - 1]);
+                }
+                if (pension > tranches.at(-1)) retainedCSG += CSGParTranches.at(-1) * (pension - tranches.at(-1));
+                return pension - retainedCSG;
+            }
+
+            function getPensionProposition(pension) {
+                const tranches = [19287/12, 29817/12, 59817/12, 79817/12];
+                const CSGParTranches = [0.075, 0.092, 0.112, 0.132];
+                retainedCSG = 0;
+                for (let i = 1; i < tranches.length; i++) {
+                    if (pension > tranches[i - 1]) retainedCSG += CSGParTranches[i - 1] * (Math.min(pension, tranches[i]) - tranches[i - 1]);
+                }
+                if (pension > tranches.at(-1)) retainedCSG += CSGParTranches.at(-1) * (pension - tranches.at(-1));
                 return pension - retainedCSG;
             }
 
@@ -148,8 +182,8 @@
             }
 
             function mySubmitFunction(e) {
-            e.preventDefault();
-            return false;
+                e.preventDefault();
+                return false;
             }
         </script>
     </body>
